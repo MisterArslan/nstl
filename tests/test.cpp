@@ -1,4 +1,4 @@
-#include "LinkedList.h"
+#include "linked_list.h"
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_SUITE(TestReverse)
