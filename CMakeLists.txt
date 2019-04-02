@@ -1,0 +1,26 @@
+cmake_minimum_required(VERSION 3.5)
+
+project(nstl)
+
+set(CMAKE_CXX_STANDARD 11)
+
+include_directories(include)
+
+FILE(GLOB SOURCES "src/*.cpp")
+
+add_library(nstl ${SOURCES})
+
+enable_testing()
+
+FIND_PACKAGE( Boost COMPONENTS system filesystem unit_test_framework REQUIRED )
+
+INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
+
+add_definitions(-DBOOST_TEST_MAIN -DBOOST_TEST_DYN_LINK)
+
+add_executable(reverse_test tests/test.cpp)
+
+target_link_libraries(reverse_test nstl ${Boost_LIBRARIES})
+
+add_test(reverse_test reverse_test)
+
