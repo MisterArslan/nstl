@@ -1,6 +1,0 @@
-/mnt/c/Users/Lionheart/git/nstl/cmake-build-debug/CMakeFiles/edit_cache.dir
-/mnt/c/Users/Lionheart/git/nstl/cmake-build-debug/CMakeFiles/nstl.dir
-/mnt/c/Users/Lionheart/git/nstl/cmake-build-debug/CMakeFiles/reverse_test.dir
-/mnt/c/Users/Lionheart/git/nstl/cmake-build-debug/CMakeFiles/test.dir
-/mnt/c/Users/Lionheart/git/nstl/cmake-build-debug/CMakeFiles/linked_list.dir
-/mnt/c/Users/Lionheart/git/nstl/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -1,2 +1,0 @@
-/usr/bin/ar qc libnstl.a  CMakeFiles/nstl.dir/src/linked_list.cpp.o
-/usr/bin/ranlib libnstl.a
