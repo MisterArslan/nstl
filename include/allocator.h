@@ -1,6 +1,10 @@
 #ifndef NSTL_ALLOCATOR_H
 #define NSTL_ALLOCATOR_H
 
+#include "size_t.h"
+#include "ptrdiff_t.h"
+#include "numeric_limits.h"
+
 namespace nstl {
     template <class T>
     class allocator {
@@ -10,8 +14,8 @@ namespace nstl {
         typedef const T* const_pointer;
         typedef T& reference;
         typedef const T& const_reference;
-        typedef int size_type; // td::size_t
-        typedef int difference_type; // std::ptrdiff_t
+        typedef nstl::size_t size_type;
+        typedef nstl::ptrdiff_t difference_type;
 
         template <class U>
         struct rebind {
@@ -25,8 +29,7 @@ namespace nstl {
             return &value;
         }
 
-        allocator() throw() {
-        }
+        allocator() = default;
         allocator(const allocator&) throw() {
         }
         template <class U>
@@ -36,8 +39,7 @@ namespace nstl {
         }
 
         size_type max_size () const throw() {
-            //return std::numeric_limits<std::size_t>::max() / sizeof(T);
-            return 2147483647 / sizeof(T);
+            return nstl::numeric_limits<nstl::size_t>::max() / sizeof(T);
         }
 
         pointer allocate (size_type num, const void* = nullptr) {
@@ -59,13 +61,11 @@ namespace nstl {
     };
 
     template <class T1, class T2>
-    bool operator== (const allocator<T1>&,
-                     const allocator<T2>&) throw() {
+    bool operator== (const allocator<T1>&, const allocator<T2>&) noexcept {
         return true;
     }
     template <class T1, class T2>
-    bool operator!= (const allocator<T1>&,
-                     const allocator<T2>&) throw() {
+    bool operator!= (const allocator<T1>&, const allocator<T2>&) noexcept {
         return false;
     }
 }
