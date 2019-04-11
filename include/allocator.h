@@ -24,21 +24,21 @@ namespace nstl {
         explicit allocator (const allocator<U>&)  {
         }
 
-        ~allocator() = default;
-
         pointer allocate (size_type num, const void* = nullptr) {
             auto ret = (pointer)(::operator new(num*sizeof(T)));
             return ret;
         }
 
-        void deallocate (pointer p, size_type num) {
+        void deallocate (pointer p) {
             ::operator delete((void*)p);
         }
 
         template <class U>
         struct rebind {
-            typedef allocator<U> other;
+            using other = allocator<U>;
         };
+
+        ~allocator() = default;
     };
 }
 

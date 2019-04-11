@@ -6,12 +6,36 @@
 namespace nstl{
     template<class T, class Allocator = nstl::allocator<T>>
     class list {
+    public:
+        using value_type = T;
+        using allocator_type = Allocator;
+        //size_type
+        //difference_type
+        using reference = value_type&;
+        using const_reference = const value_type&;
+        //using pointer = Allocator::pointer;
+        //using const_pointer = Allocator::const_pointer;
+        //iterator
+        //const_iterator
+        //reverse_iterator
+        //const_reverse_iterator
     private:
         struct node {
             T value;
             node *next;
             node *prev;
         };
+
+        Allocator alloc;
+        node* head;
+        node* tail;
+
+        node* createNode(T value){
+            node* newNode = alloc::allocate(1);
+            newNode->value = value;
+            newNode->next = nullptr;
+            newNode->prev = nullptr;
+        }
     public:
         list() = default;
         list(const list&) noexcept {
@@ -24,9 +48,42 @@ namespace nstl{
         list(list&& list) noexcept {
             this = list;
         }
+        ~list(){
+            clear();
+        }
+
+        void operator=(const list&) {
+            clear();
+            auto temp = list::front();
+            while(temp) {
+                push_back(temp->value);
+                temp = temp->next;
+            }
+        }
+
+        void assign(size_type count, const T& value) {
+
+        }
+
+        Allocator get_allocator() {return alloc;}
 
         node* front() {return head;}
+
         node* back() {return tail;}
+
+        bool empty() {
+            return head == nullptr;
+        }
+
+        size_type size() {
+            size_type result = 0;
+            auto temp = front();
+            while(temp) {
+                ++result;
+                temp = temp->next;
+            }
+            return result;
+        }
 
         void push_front(T value) {
             if (head) {
@@ -48,19 +105,23 @@ namespace nstl{
             }
         }
 
-        ~list(){
-
+        node* pop_back() {
+            auto temp = head;
+            while(temp && temp->next != tail) {
+                temp = temp->next;
+            }
+            alloc::deallocate(tail);
+            tail = temp;
         }
-    private:
-        node* head;
-        node* tail;
 
-        node* createNode(T value){
-            node* newNode = new node;
-            newNode->value = value;
-            newNode->next = nullptr;
-            newNode->prev = nullptr;
+        void clear() {
+            while (head) {
+                auto to_delete = head;
+                head = head->next;
+                alloc::deallocate(to_delete);
+            }
         }
+
     };
 }
 
