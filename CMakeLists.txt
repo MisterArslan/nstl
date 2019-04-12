@@ -3,12 +3,10 @@ cmake_minimum_required(VERSION 3.5)
 project(nstl)
 
 set(CMAKE_CXX_STANDARD 11)
+SET(CMAKE_CXX_COMPILER clang++)
+SET(CMAKE_CXX_FLAGS "-fsanitize=address -g")
 
 include_directories(include)
-
-FILE(GLOB SOURCES "src/*.cpp")
-
-add_library(nstl ${SOURCES} include/list.h include/allocator.h include/list.h include/size_t.h include/ptrdiff_t.h)
 
 enable_testing()
 
@@ -18,10 +16,10 @@ INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
 add_definitions(-DBOOST_TEST_MAIN -DBOOST_TEST_DYN_LINK)
 
-add_executable(reverse_test tests/test.cpp include/list.h include/allocator.h include/list.h include/size_t.h include/ptrdiff_t.h)
-add_executable(linked_list include/allocator.h include/list.h include/size_t.h include/ptrdiff_t.h)
+add_executable(test_list tests/test_list.cpp)
 
-target_link_libraries(reverse_test nstl ${Boost_LIBRARIES})
+target_link_libraries(test_list ${Boost_LIBRARIES})
 
-add_test(reverse_test reverse_test)
+add_test(test_list test_list)
 
+add_executable(main tests/main.cpp)
