@@ -140,12 +140,12 @@ typename list<T, Allocator>::iterator list<T, Allocator>::begin() {
 
 template<class T, class Allocator>
 typename list<T, Allocator>::const_iterator list<T, Allocator>::begin() const {
-  return typename list<T, Allocator>::iterator(head->next);
+  return typename list<T, Allocator>::const_iterator(head->next);
 }
 
 template<class T, class Allocator>
 typename list<T, Allocator>::const_iterator list<T, Allocator>::cbegin() const {
-  return typename list<T, Allocator>::iterator(head->next);
+  return typename list<T, Allocator>::const_iterator(head->next);
 }
 
 template<class T, class Allocator>
@@ -155,40 +155,40 @@ typename list<T, Allocator>::iterator list<T, Allocator>::end() {
 
 template<class T, class Allocator>
 typename list<T, Allocator>::const_iterator list<T, Allocator>::end() const {
-  return typename list<T, Allocator>::iterator(tail);
+  return typename list<T, Allocator>::const_iterator(tail);
 }
 
 template<class T, class Allocator>
 typename list<T, Allocator>::const_iterator list<T, Allocator>::cend() const {
-  return typename list<T, Allocator>::iterator(tail);
+  return typename list<T, Allocator>::const_iterator(tail);
 }
 
 template<class T, class Allocator>
 typename list<T, Allocator>::reverse_iterator list<T, Allocator>::rbegin() {
-  return typename list<T, Allocator>::iterator(tail);
+  return typename list<T, Allocator>::reverse_iterator(tail->prev);
 }
 
 template<class T, class Allocator>
 typename list<T, Allocator>::const_reverse_iterator list<T, Allocator>::rbegin() const {
-  return typename list<T, Allocator>::iterator(tail);
+  return typename list<T, Allocator>::const_reverse_iterator(tail->prev);
 }
 
 template<class T, class Allocator>
 typename list<T, Allocator>::const_reverse_iterator list<T, Allocator>::crbegin() const {
-  return typename list<T, Allocator>::iterator(tail);
+  return typename list<T, Allocator>::const_reverse_iterator(tail->prev);
 }
 
 template<class T, class Allocator>
 typename list<T, Allocator>::reverse_iterator list<T, Allocator>::rend() {
-  return typename list<T, Allocator>::iterator(head->next);
+  return typename list<T, Allocator>::reverse_iterator(head);
 }
 
 template<class T, class Allocator>
 typename list<T, Allocator>::const_reverse_iterator list<T, Allocator>::rend() const {
-  return typename list<T, Allocator>::iterator(head->next);
+  return typename list<T, Allocator>::const_reverse_iterator(head);
 }
 
 template<class T, class Allocator>
 typename list<T, Allocator>::const_reverse_iterator list<T, Allocator>::crend() const {
-  return typename list<T, Allocator>::iterator(head->next);
+  return typename list<T, Allocator>::const_reverse_iterator(head);
 }

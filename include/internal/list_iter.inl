@@ -39,11 +39,7 @@ bool iterator_impl<T>::operator!=(const iterator_impl <T> &rhs) {
 }
 
 template<class T>
-typename iterator_traits<T>::reference iterator_impl<T>::operator*() {
-  return current->value;
-}
-
-template<class T>
-typename iterator_traits<T>::const_reference iterator_impl<T>::operator*() const {
+typename std::iterator<std::bidirectional_iterator_tag, T>::reference
+iterator_impl<T>::operator*() {
   return current->value;
 }

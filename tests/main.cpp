@@ -12,5 +12,12 @@ int main() {
     std::cout << i << std::endl;
   }
 
+  std::cout << std::endl;
+
   nstl::internal::reverse(list.begin(), list.end());
+  nstl::internal::bubble_sort(list.begin(), list.end());
+
+  for (auto &i: list) {
+    std::cout << i << std::endl;
+  }
 }

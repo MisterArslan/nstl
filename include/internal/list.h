@@ -18,18 +18,7 @@ struct node {
 };
 
 template<typename T>
-class iterator_traits {
-public:
-  using iterator_category = std::bidirectional_iterator_tag;
-  using value_type = typename list<T>::value_type;
-  using difference_type = typename list<T>::difference_type;
-  using pointer = typename list<T>::pointer;
-  using reference = typename list<T>::reference;
-  using const_reference = typename list<T>::const_reference;
-};
-
-template<typename T>
-class iterator_impl : public iterator_traits<T> {
+class iterator_impl : public std::iterator<std::bidirectional_iterator_tag, T> {
 private:
   node<T> *current;
 public:
@@ -40,12 +29,11 @@ public:
   iterator_impl operator--(int);
   bool operator==(const iterator_impl &rhs);
   bool operator!=(const iterator_impl &rhs);
-  typename iterator_traits<T>::reference operator*();
-  typename iterator_traits<T>::const_reference operator*() const;
+  typename std::iterator<std::bidirectional_iterator_tag, T>::reference operator*();
 };
 
 template<typename T>
-class iterator_const_impl : public iterator_traits<T> {
+class iterator_const_impl : public std::iterator<std::bidirectional_iterator_tag, T> {
 private:
   node<T> *current;
 public:
@@ -56,12 +44,12 @@ public:
   iterator_const_impl operator--(int);
   bool operator==(const iterator_const_impl &rhs);
   bool operator!=(const iterator_const_impl &rhs);
-  typename iterator_traits<T>::reference operator*();
-  typename iterator_traits<T>::const_reference operator*() const;
+  typename std::iterator<std::bidirectional_iterator_tag, T>::reference operator*();
+  typename std::iterator<std::bidirectional_iterator_tag, T>::const_reference operator*() const;
 };
 
 template<typename T>
-class reverse_iterator_impl : public iterator_traits<T> {
+class reverse_iterator_impl : public std::iterator<std::bidirectional_iterator_tag, T> {
 private:
   node<T> *current;
 public:
@@ -72,12 +60,11 @@ public:
   reverse_iterator_impl operator--(int);
   bool operator==(const reverse_iterator_impl &rhs);
   bool operator!=(const reverse_iterator_impl &rhs);
-  typename iterator_traits<T>::reference operator*();
-  typename iterator_traits<T>::const_reference operator*() const;
+  typename std::iterator<std::bidirectional_iterator_tag, T>::reference operator*();
 };
 
 template<typename T>
-class reverse_iterator_const_impl : public iterator_traits<T> {
+class reverse_iterator_const_impl : public std::iterator<std::bidirectional_iterator_tag, T> {
 private:
   node<T> *current;
 public:
@@ -88,8 +75,8 @@ public:
   reverse_iterator_const_impl operator--(int);
   bool operator==(const reverse_iterator_const_impl &rhs);
   bool operator!=(const reverse_iterator_const_impl &rhs);
-  typename iterator_traits<T>::reference operator*();
-  typename iterator_traits<T>::const_reference operator*() const;
+  typename std::iterator<std::bidirectional_iterator_tag, T>::reference operator*();
+  typename std::iterator<std::bidirectional_iterator_tag, T>::const_reference operator*() const;
 };
 
 template<class T, class Allocator>

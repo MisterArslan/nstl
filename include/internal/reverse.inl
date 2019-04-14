@@ -4,11 +4,15 @@ void reverse(Iter begin, Iter end) {
 }
 
 template<typename Iter>
-void reverse_impl(Iter begin, Iter end, std::random_access_iterator_tag) {
-  std::cout << "lel" << std::endl;
+void reverse_impl(Iter begin, Iter end, std::bidirectional_iterator_tag) {
+  using std::swap;
+  auto distance = std::distance(begin, end);
+  auto l = begin;
+  auto r = --end;
+  for (int i = 0; i < distance / 2; i++) {
+    swap(*l, *r);
+    ++l;
+    --r;
+  }
 }
 
-template<typename Iter>
-void reverse_impl(Iter begin, Iter end, std::bidirectional_iterator_tag) {
-  std::cout << "kek" << std::endl;
-}

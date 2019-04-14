@@ -1,7 +1,10 @@
 #ifndef NSTL_INTERNAL_REVERSE_H
 #define NSTL_INTERNAL_REVERSE_H
+
 #include <iterator>
 #include <iostream>
+#include <utility>
+
 namespace nstl {
 namespace internal {
 
