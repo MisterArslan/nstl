@@ -40,6 +40,29 @@ public:
   const_reference operator*() const;
 };
 
+template<typename T>
+class reverse_iterator_impl {
+private:
+  node<T> *current;
+public:
+  using iterator_category = std::bidirectional_iterator_tag;
+  using value_type = typename list<T>::value_type;
+  using difference_type = typename list<T>::difference_type;
+  using pointer = typename list<T>::pointer;
+  using reference = typename list<T>::reference;
+  using const_reference = typename list<T>::const_reference;
+public:
+  explicit reverse_iterator_impl(node<T> *node) noexcept;
+  reverse_iterator_impl &operator++();
+  reverse_iterator_impl operator++(int);
+  reverse_iterator_impl &operator--();
+  reverse_iterator_impl operator--(int);
+  bool operator==(const reverse_iterator_impl &rhs);
+  bool operator!=(const reverse_iterator_impl &rhs);
+  reference operator*();
+  const_reference operator*() const;
+};
+
 template<class T, class Allocator>
 class list {
 public:
@@ -53,7 +76,7 @@ public:
   using const_pointer = typename Allocator::const_pointer;
   using iterator = iterator_impl<T>;
   using const_iterator = int;
-  using reverse_iterator = int;
+  using reverse_iterator = reverse_iterator_impl<T>;
   using const_reverse_iterator = int;
 private:
   allocator_type alloc;
@@ -94,8 +117,9 @@ public:
   void clear();
 };
 
-#include "list_iter.inl"
 #include "list.inl"
+#include "list_iter.inl"
+#include "list_reverse_iter.inl"
 
 }
 }
