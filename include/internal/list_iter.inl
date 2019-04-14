@@ -39,11 +39,11 @@ bool iterator_impl<T>::operator!=(const iterator_impl <T> &rhs) {
 }
 
 template<class T>
-typename iterator_impl<T>::reference iterator_impl<T>::operator*() {
+typename iterator_traits<T>::reference iterator_impl<T>::operator*() {
   return current->value;
 }
 
 template<class T>
-typename iterator_impl<T>::const_reference iterator_impl<T>::operator*() const {
+typename iterator_traits<T>::const_reference iterator_impl<T>::operator*() const {
   return current->value;
 }

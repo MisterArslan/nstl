@@ -18,9 +18,7 @@ struct node {
 };
 
 template<typename T>
-class iterator_impl {
-private:
-  node<T> *current;
+class iterator_traits {
 public:
   using iterator_category = std::bidirectional_iterator_tag;
   using value_type = typename list<T>::value_type;
@@ -28,6 +26,12 @@ public:
   using pointer = typename list<T>::pointer;
   using reference = typename list<T>::reference;
   using const_reference = typename list<T>::const_reference;
+};
+
+template<typename T>
+class iterator_impl : public iterator_traits<T> {
+private:
+  node<T> *current;
 public:
   explicit iterator_impl(node<T> *node) noexcept;
   iterator_impl &operator++();
@@ -36,21 +40,30 @@ public:
   iterator_impl operator--(int);
   bool operator==(const iterator_impl &rhs);
   bool operator!=(const iterator_impl &rhs);
-  reference operator*();
-  const_reference operator*() const;
+  typename iterator_traits<T>::reference operator*();
+  typename iterator_traits<T>::const_reference operator*() const;
 };
 
 template<typename T>
-class reverse_iterator_impl {
+class iterator_const_impl : public iterator_traits<T> {
 private:
   node<T> *current;
 public:
-  using iterator_category = std::bidirectional_iterator_tag;
-  using value_type = typename list<T>::value_type;
-  using difference_type = typename list<T>::difference_type;
-  using pointer = typename list<T>::pointer;
-  using reference = typename list<T>::reference;
-  using const_reference = typename list<T>::const_reference;
+  explicit iterator_const_impl(node<T> *node) noexcept;
+  iterator_const_impl &operator++();
+  iterator_const_impl operator++(int);
+  iterator_const_impl &operator--();
+  iterator_const_impl operator--(int);
+  bool operator==(const iterator_const_impl &rhs);
+  bool operator!=(const iterator_const_impl &rhs);
+  typename iterator_traits<T>::reference operator*();
+  typename iterator_traits<T>::const_reference operator*() const;
+};
+
+template<typename T>
+class reverse_iterator_impl : public iterator_traits<T> {
+private:
+  node<T> *current;
 public:
   explicit reverse_iterator_impl(node<T> *node) noexcept;
   reverse_iterator_impl &operator++();
@@ -59,8 +72,24 @@ public:
   reverse_iterator_impl operator--(int);
   bool operator==(const reverse_iterator_impl &rhs);
   bool operator!=(const reverse_iterator_impl &rhs);
-  reference operator*();
-  const_reference operator*() const;
+  typename iterator_traits<T>::reference operator*();
+  typename iterator_traits<T>::const_reference operator*() const;
+};
+
+template<typename T>
+class reverse_iterator_const_impl : public iterator_traits<T> {
+private:
+  node<T> *current;
+public:
+  explicit reverse_iterator_const_impl(node<T> *node) noexcept;
+  reverse_iterator_const_impl &operator++();
+  reverse_iterator_const_impl operator++(int);
+  reverse_iterator_const_impl &operator--();
+  reverse_iterator_const_impl operator--(int);
+  bool operator==(const reverse_iterator_const_impl &rhs);
+  bool operator!=(const reverse_iterator_const_impl &rhs);
+  typename iterator_traits<T>::reference operator*();
+  typename iterator_traits<T>::const_reference operator*() const;
 };
 
 template<class T, class Allocator>
@@ -75,9 +104,9 @@ public:
   using pointer = typename Allocator::pointer;
   using const_pointer = typename Allocator::const_pointer;
   using iterator = iterator_impl<T>;
-  using const_iterator = int;
+  using const_iterator = iterator_const_impl<T>;
   using reverse_iterator = reverse_iterator_impl<T>;
-  using const_reverse_iterator = int;
+  using const_reverse_iterator = reverse_iterator_const_impl<T>;
 private:
   allocator_type alloc;
   node<T> *head;

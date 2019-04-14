@@ -1,11 +1,9 @@
-
-#include "list.h"
-
 template<class T, class Allocator>
 void list<T, Allocator>::initialize() {
   head = alloc.allocate(1);
   head->next = alloc.allocate(1);
   tail = head->next;
+  tail->prev = head;
 }
 
 template<class T, class Allocator>
@@ -102,8 +100,11 @@ typename list<T, Allocator>::reference list<T, Allocator>::pop_back() {
 
 template<class T, class Allocator>
 void list<T, Allocator>::clear() {
-  for (auto &e: *this) {
-    alloc.deallocate(e);
+  while (head->next != tail) {
+    auto to_delete = head->next;
+    head->next = head->next->next;
+    head->next->prev = head;
+    alloc.deallocate(to_delete);
   }
 }
 
