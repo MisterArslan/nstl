@@ -2,6 +2,8 @@
 #include <iostream>
 #include "algorithm.h"
 #include "list.h"
+#include "vector.h"
+
 int main() {
   nstl::list<int> list{};
   list.push_back(1);
