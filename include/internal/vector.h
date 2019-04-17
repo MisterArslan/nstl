@@ -23,9 +23,10 @@ public:
   using reverse_iterator = reverse_iterator_impl<T>;
   using const_reverse_iterator = reverse_iterator_const_impl<T>;
 private:
+  allocator_type alloc;
   pointer tab;
-  size_type _size;
-  size_type _capacity;
+  size_type m_size;
+  size_type m_capacity;
 public:
   vector();
   explicit vector(size_type size);
@@ -34,16 +35,16 @@ public:
   vector(const vector &rhs) noexcept;
   vector(vector &&rhs) noexcept;
   ~vector();
-  vector& operator=(const vector &other );
-  vector& operator=(vector&& other);
+  vector& operator=(const vector &rhs );
+  vector& operator=(vector&& rhs);
   void assign(size_type count, const_reference value);
   template<typename InputIt>
   void assign(InputIt first, InputIt last);
   allocator_type get_allocator() const;
-  reference at( size_type pos );
-  const_reference at( size_type pos ) const;
-  reference operator[]( size_type pos );
-  const_reference operator[]( size_type pos ) const;
+  reference at(size_type pos);
+  const_reference at(size_type pos) const;
+  reference operator[](size_type pos);
+  const_reference operator[](size_type pos) const;
   reference front();
   const_reference front() const;
   reference back();
@@ -78,7 +79,7 @@ public:
   iterator emplace(const_iterator pos, Args&&... args);
   iterator erase(const_iterator pos);
   iterator erase(const_iterator first, const_iterator last);
-  void push_back(T&& value);
+  void push_back(T &&value);
   template<typename... Args>
   void emplace_back(Args&&... args);
   void pop_back();
