@@ -8,20 +8,41 @@ namespace nstl {
 namespace internal {
 
 template<typename T, typename Allocator = allocator<T>>
+class vector;
+
+template<typename T, typename V = vector<T, allocator<T>>>
+class vector_iter : public std::iterator<std::bidirectional_iterator_tag, T> {
+public:
+  using size_type = typename std::size_t;
+private:
+  V tab;
+  size_type current;
+public:
+  explicit vector_iter(size_type index) noexcept;
+  vector_iter &operator++();
+  vector_iter operator++(int);
+  vector_iter &operator--();
+  vector_iter operator--(int);
+  bool operator==(const vector_iter &rhs);
+  bool operator!=(const vector_iter &rhs);
+  typename std::iterator<std::bidirectional_iterator_tag, T>::reference operator*();
+};
+
+template<typename T, typename Allocator>
 class vector {
 public:
   using value_type = T;
-  using allocator_type = typename Allocator::template rebind<node<T>>::other;
+  using allocator_type = Allocator;
   using size_type = std::size_t;
   using difference_type = std::ptrdiff_t;
   using reference = value_type &;
   using const_reference = const value_type &;
   using pointer = typename Allocator::pointer;
   using const_pointer = typename Allocator::const_pointer;
-  using iterator = iterator_impl<T>;
-  using const_iterator = iterator_const_impl<T>;
-  using reverse_iterator = reverse_iterator_impl<T>;
-  using const_reverse_iterator = reverse_iterator_const_impl<T>;
+  using iterator = vector_iter<T>;
+  using const_iterator = int;
+  using reverse_iterator = int;
+  using const_reverse_iterator = int;
 private:
   allocator_type alloc;
   pointer tab;
@@ -89,6 +110,7 @@ public:
 };
 
 #include "vector.inl"
+#include "vector_iter.inl"
 
 }
 }

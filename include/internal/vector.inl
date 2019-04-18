@@ -1,6 +1,6 @@
 template<typename T, typename Allocator>
 vector<T, Allocator>::vector()
-    : tab(nullptr), m_size(), m_capacity() {}
+    : tab(nullptr), m_size(0), m_capacity(0) {}
 
 template<typename T, typename Allocator>
 vector<T, Allocator>::vector(vector::size_type size)
@@ -42,8 +42,6 @@ vector<T, Allocator>::vector(vector &&rhs) noexcept
 template<typename T, typename Allocator>
 vector<T, Allocator>::~vector() {
   alloc.deallocate(tab);
-  alloc.deallocate(m_capacity);
-  alloc.deallocate(m_size);
 }
 
 template<typename T, typename Allocator>
@@ -120,12 +118,12 @@ typename vector<T, Allocator>::const_reference vector<T, Allocator>::front() con
 
 template<typename T, typename Allocator>
 typename vector<T, Allocator>::reference vector<T, Allocator>::back() {
-  return tab[m_size];
+  return tab[m_size - 1];
 }
 
 template<typename T, typename Allocator>
 typename vector<T, Allocator>::const_reference vector<T, Allocator>::back() const {
-  return tab[m_size];
+  return tab[m_size - 1];
 }
 
 template<typename T, typename Allocator>
@@ -155,9 +153,12 @@ typename vector<T, Allocator>::size_type vector<T, Allocator>::capacity() const 
 
 template<typename T, typename Allocator>
 void vector<T, Allocator>::shrink_to_fit() {
-  for (auto i = m_size; i < m_capacity; i++) {
-    alloc.deallocate(tab[i]);
+  auto new_tab = alloc.allocate(m_size);
+  for (int i = 0; i < m_size; i++) {
+    new_tab[i] = tab[i];
   }
+  alloc.deallocate(tab);
+  tab = new_tab;
   m_capacity = m_size;
 }
 
@@ -173,3 +174,16 @@ typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(vector::con
   //todo
 }
 
+template<typename T, typename Allocator>
+void vector<T, Allocator>::pop_back() {
+  auto tmp = back();
+  alloc.deallocate(back());
+  --m_size;
+  return tmp;
+}
+
+template<typename T, typename Allocator>
+void vector<T, Allocator>::push_back(T &&value) {
+  tab[m_size] = value;
+  ++m_size;
+}

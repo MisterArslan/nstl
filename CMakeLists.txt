@@ -17,9 +17,12 @@ INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 add_definitions(-DBOOST_TEST_MAIN -DBOOST_TEST_DYN_LINK)
 
 add_executable(test_list tests/test_list.cpp)
+add_executable(test_vector tests/test_vector.cpp)
 
 target_link_libraries(test_list ${Boost_LIBRARIES})
+target_link_libraries(test_vector ${Boost_LIBRARIES})
 
 add_test(test_list test_list)
+add_test(test_vector test_vector)
 
 add_executable(main tests/main.cpp)
