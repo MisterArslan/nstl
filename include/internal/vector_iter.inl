@@ -1,40 +1,46 @@
-template<typename T, typename V>
-vector_iter<T, V>::vector_iter(vector_iter::size_type index) noexcept {
-  current = index;
+template<typename T>
+vector_iter<T>::vector_iter(vector_iter::pointer tab) noexcept {
+  m_tab = tab;
 }
 
-template<typename T, typename V>
-vector_iter<T, V> &vector_iter<T, V>::operator++() {
-  ++current;
+template<typename T>
+vector_iter<T> &vector_iter<T>::operator++() {
+  ++m_tab;
+  return *this;
 }
 
-template<typename T, typename V>
-vector_iter<T, V> vector_iter<T, V>::operator++(int) {
-  ++current;
+template<typename T>
+vector_iter<T> vector_iter<T>::operator++(int) {
+  auto iterator = *this;
+  ++*this;
+  return iterator;
 }
 
-template<typename T, typename V>
-vector_iter<T, V> &vector_iter<T, V>::operator--() {
-  --current;
+template<typename T>
+vector_iter<T> &vector_iter<T>::operator--() {
+  --m_tab;
+  return *this;
 }
 
-template<typename T, typename V>
-vector_iter<T, V> vector_iter<T, V>::operator--(int) {
-  --current;
+template<typename T>
+vector_iter<T> vector_iter<T>::operator--(int) {
+  auto iterator = *this;
+  --*this;
+  return iterator;
 }
 
-template<typename T, typename V>
-bool vector_iter<T, V>::operator==(const vector_iter &rhs) {
-  return current == rhs.current;
+template<typename T>
+bool vector_iter<T>::operator==(const vector_iter &rhs) {
+  return m_tab == rhs.m_tab;
 }
 
-template<typename T, typename V>
-bool vector_iter<T, V>::operator!=(const vector_iter &rhs) {
-  return current != rhs.current;
+template<typename T>
+bool vector_iter<T>::operator!=(const vector_iter &rhs) {
+  return m_tab != rhs.m_tab;
 }
 
-template<typename T, typename V>
-typename std::iterator<std::bidirectional_iterator_tag, T>::reference vector_iter<T, V>::operator*() {
-  return tab[index];
+template<typename T>
+typename vector_iter<T>::reference vector_iter<T>::operator*() {
+  return *m_tab;
 }
 

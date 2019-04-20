@@ -1,10 +1,9 @@
-template<typename T, typename Allocator>
-vector<T, Allocator>::vector()
-    : tab(nullptr), m_size(0), m_capacity(0) {}
+
+#include "vector.h"
 
 template<typename T, typename Allocator>
 vector<T, Allocator>::vector(vector::size_type size)
-  : m_size(size), m_capacity(size) {
+  : m_size(0), m_capacity(size) {
   tab = alloc.allocate(m_capacity);
 }
 
@@ -77,7 +76,7 @@ void vector<T, Allocator>::assign(vector::size_type count, const_reference value
     m_size = count;
   }
   for (auto i = 0; i < count; i++) {
-    tab[i] = *value;
+    tab[i] = value;
   }
 }
 
@@ -170,12 +169,38 @@ void vector<T, Allocator>::clear() {
 }
 
 template<typename T, typename Allocator>
-typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(vector::const_iterator pos, const_reference value) {
-  //todo
+typename vector<T, Allocator>::iterator vector<T, Allocator>::insert(vector::iterator pos, const_reference value) {
+  if (m_size < m_capacity) {
+    auto iter = end();
+    for (auto i = end(); i != pos; i--) {
+      *i = *(--iter);
+    }
+    *pos = value;
+    m_size += 1;
+    return pos;
+  }
+  else {
+    m_capacity *= 2;
+    auto new_tab = alloc.allocate(m_capacity);
+    auto iter = vector<T, Allocator>::iterator(new_tab);
+    for (auto i = begin(); i != pos; i++, iter++) {
+      *iter = *i;
+    }
+    auto temp = iter;
+    ++iter;
+    for (auto i = pos; i != end(); i++, iter++) {
+      *iter = *i;
+    }
+    *temp = value;
+    alloc.deallocate(tab);
+    tab = new_tab;
+    m_size += 1;
+    return iter;
+  }
 }
 
 template<typename T, typename Allocator>
-void vector<T, Allocator>::pop_back() {
+typename vector<T, Allocator>::reference vector<T, Allocator>::pop_back() {
   auto tmp = back();
   alloc.deallocate(back());
   --m_size;
@@ -184,6 +209,76 @@ void vector<T, Allocator>::pop_back() {
 
 template<typename T, typename Allocator>
 void vector<T, Allocator>::push_back(T &&value) {
+  if (m_size >= m_capacity) {
+    m_capacity *= 2;
+    auto new_tab = alloc.allocate(m_capacity);
+    for (auto i = 0; i < m_size; i++) {
+      new_tab[i] = tab[i];
+    }
+    alloc.deallocate(tab);
+    tab = new_tab;
+  }
   tab[m_size] = value;
   ++m_size;
+}
+
+template<typename T, typename Allocator>
+typename vector<T, Allocator>::iterator vector<T, Allocator>::begin() {
+  return typename vector<T, Allocator>::iterator(tab);
+}
+
+template<typename T, typename Allocator>
+typename vector<T, Allocator>::iterator vector<T, Allocator>::end() {
+  return typename vector<T, Allocator>::iterator(tab + m_size);
+}
+
+template<typename T, typename Allocator>
+typename vector<T, Allocator>::const_iterator vector<T, Allocator>::begin() const {
+  return typename vector<T, Allocator>::iterator(tab);
+}
+
+template<typename T, typename Allocator>
+typename vector<T, Allocator>::const_iterator vector<T, Allocator>::end() const {
+  return typename vector<T, Allocator>::iterator(tab + m_size);
+}
+
+template<typename T, typename Allocator>
+void vector<T, Allocator>::resize(vector::size_type count) {
+  auto new_tab = alloc.allocate(count);
+  if (m_size < count) {
+    for (auto i = 0; i < m_size; i++) {
+      new_tab[i] = tab[i];
+    }
+  }
+  else {
+    for (auto i = 0; i < count; i++) {
+      new_tab[i] = tab[i];
+    }
+  }
+  alloc.deallocate(tab);
+  tab = new_tab;
+  m_size = count;
+  m_capacity = count;
+}
+
+template<typename T, typename Allocator>
+void vector<T, Allocator>::resize(vector::size_type count, const_reference value) {
+  auto new_tab = alloc.allocate(count);
+  if (m_size < count) {
+    for (auto i = 0; i < m_size; i++) {
+      new_tab[i] = tab[i];
+    }
+    for (auto i = m_size; i < count; i++) {
+      new_tab[i] = value;
+    }
+  }
+  else {
+    for (auto i = 0; i < count; i++) {
+      new_tab[i] = tab[i];
+    }
+  }
+  alloc.deallocate(tab);
+  tab = new_tab;
+  m_size = count;
+  m_capacity = count;
 }

@@ -10,22 +10,23 @@ namespace internal {
 template<typename T, typename Allocator = allocator<T>>
 class vector;
 
-template<typename T, typename V = vector<T, allocator<T>>>
-class vector_iter : public std::iterator<std::bidirectional_iterator_tag, T> {
+template<typename T>
+class vector_iter
+    : public std::iterator<std::random_access_iterator_tag, T> {
 public:
-  using size_type = typename std::size_t;
+  using pointer = typename std::iterator<std::random_access_iterator_tag, T>::pointer;
+  using reference = typename std::iterator<std::random_access_iterator_tag, T>::reference;
 private:
-  V tab;
-  size_type current;
+  pointer m_tab;
 public:
-  explicit vector_iter(size_type index) noexcept;
+  explicit vector_iter(pointer tab) noexcept;
   vector_iter &operator++();
   vector_iter operator++(int);
   vector_iter &operator--();
   vector_iter operator--(int);
   bool operator==(const vector_iter &rhs);
   bool operator!=(const vector_iter &rhs);
-  typename std::iterator<std::bidirectional_iterator_tag, T>::reference operator*();
+  reference operator*();
 };
 
 template<typename T, typename Allocator>
@@ -49,7 +50,6 @@ private:
   size_type m_size;
   size_type m_capacity;
 public:
-  vector();
   explicit vector(size_type size);
   explicit vector(size_type size, value_type value);
   vector(const std::initializer_list<T> &init);
@@ -90,7 +90,7 @@ public:
   size_type capacity() const;
   void shrink_to_fit();
   void clear();
-  iterator insert(const_iterator pos, const_reference value);
+  iterator insert(iterator pos, const_reference value);
   iterator insert(const_iterator pos, T&& value);
   iterator insert(const_iterator pos, size_type count, const_reference value);
   template<typename InputIt>
@@ -103,7 +103,7 @@ public:
   void push_back(T &&value);
   template<typename... Args>
   void emplace_back(Args&&... args);
-  void pop_back();
+  reference pop_back();
   void resize(size_type count);
   void resize(size_type count, const_reference value);
   void swap(vector& other);

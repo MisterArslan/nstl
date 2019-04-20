@@ -3,7 +3,7 @@
 #include "algorithm.h"
 BOOST_AUTO_TEST_SUITE(TestVector)
 BOOST_AUTO_TEST_CASE(TestVector) {
-  nstl::vector<int> vector{};
+  nstl::vector<int> vector(1);
   vector.push_back(1);
   vector.push_back(2);
   BOOST_REQUIRE_EQUAL(vector.front(), 1);
