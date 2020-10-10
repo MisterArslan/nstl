@@ -28,6 +28,8 @@ list<T, Allocator>::list(list &&rhs) noexcept {
 template<class T, class Allocator>
 list<T, Allocator>::~list() {
   clear();
+  alloc.deallocate(head);
+  alloc.deallocate(tail);
 }
 
 template<class T, class Allocator>
