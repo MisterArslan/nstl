@@ -1,18 +1,19 @@
-#include <boost/test/unit_test.hpp>
 #include "list.h"
 #include "algorithm.h"
-BOOST_AUTO_TEST_SUITE(TestList)
-BOOST_AUTO_TEST_CASE(TestList) {
+#include <cassert>
+
+int main() {
   nstl::list<int> list{};
   list.push_back(1);
   list.push_back(2);
-  BOOST_REQUIRE_EQUAL(list.front(), 1);
-  BOOST_REQUIRE_EQUAL(list.back(), 2);
+  assert(list.front() == 1);
+  assert(list.back() == 2);
 
   auto iter = list.begin();
 
-  BOOST_REQUIRE_EQUAL(*iter, 1);
+  assert(*iter == 1);
   ++iter;
-  BOOST_REQUIRE_EQUAL(*iter, 2);
+  assert(*iter == 2);
+
+  return 0;
 }
-BOOST_AUTO_TEST_SUITE_END()
