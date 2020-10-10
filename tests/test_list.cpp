@@ -4,7 +4,6 @@
 
 int main() {
   nstl::list<int> list{};
-  /*
   list.push_back(1);
   list.push_back(2);
   assert(list.front() == 1);
@@ -15,7 +14,6 @@ int main() {
   assert(*iter == 1);
   ++iter;
   assert(*iter == 2);
-  */
 
   return 0;
 }
