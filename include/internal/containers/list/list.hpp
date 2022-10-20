@@ -1,7 +1,7 @@
-#ifndef NSTL_INTERNAL_LIST_H
-#define NSTL_INTERNAL_LIST_H
+#ifndef NSTL_INTERNAL_LIST_HPP
+#define NSTL_INTERNAL_LIST_HPP
 
-#include "allocator.h"
+#include "allocator.hpp"
 #include <iterator>
 
 namespace nstl {
@@ -137,7 +137,7 @@ public:
 #include "list_iter.inl"
 #include "list_reverse_iter.inl"
 
-}
-}
+} /* internal */
+} /* nstl */
 
-#endif //NSTL_INTERNAL_LIST_H
+#endif /* NSTL_INTERNAL_LIST_HPP */

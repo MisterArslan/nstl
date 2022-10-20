@@ -1,5 +1,5 @@
-#ifndef NSTL_INTERNAL_REVERSE_H
-#define NSTL_INTERNAL_REVERSE_H
+#ifndef NSTL_INTERNAL_REVERSE_HPP
+#define NSTL_INTERNAL_REVERSE_HPP
 
 #include <iterator>
 #include <iostream>
@@ -18,6 +18,8 @@ template<typename Iter>
 void reverse_impl(Iter begin, Iter end, std::random_access_iterator_tag);
 
 #include "reverse.inl"
-}
-}
-#endif //NSTL_INTERNAL_REVERSE_H
+
+} /* internal */
+} /* nstl */
+
+#endif /* NSTL_INTERNAL_REVERSE_HPP */

@@ -1,10 +1,11 @@
-#ifndef NSTL_INTERNAL_ALLOCATOR_H
-#define NSTL_INTERNAL_ALLOCATOR_H
+#ifndef NSTL_INTERNAL_ALLOCATOR_HPP
+#define NSTL_INTERNAL_ALLOCATOR_HPP
 
 #include <cstddef>
 
 namespace nstl {
 namespace internal {
+
 template<class T>
 class allocator {
 public:
@@ -40,6 +41,8 @@ public:
 
   ~allocator() = default;
 };
-} // TODO: namespace nstl
-}
-#endif //NSTL_INTERNAL_ALLOCATOR_H
+
+} /* internal */
+} /* nstl */
+
+#endif /* NSTL_INTERNAL_ALLOCATOR_HPP */

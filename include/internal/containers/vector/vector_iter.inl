@@ -43,4 +43,3 @@ template<typename T>
 typename vector_iter<T>::reference vector_iter<T>::operator*() {
   return *m_tab;
 }
-

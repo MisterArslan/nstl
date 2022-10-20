@@ -15,4 +15,3 @@ void reverse_impl(Iter begin, Iter end, std::bidirectional_iterator_tag) {
     --r;
   }
 }
-

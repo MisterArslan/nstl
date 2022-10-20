@@ -1,6 +1,3 @@
-
-#include "vector.h"
-
 template<typename T, typename Allocator>
 vector<T, Allocator>::vector(vector::size_type size)
   : m_size(0), m_capacity(size) {

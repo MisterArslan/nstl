@@ -1,5 +1,5 @@
-#include "list.h"
-#include "algorithm.h"
+#include "list.hpp"
+#include "algorithm.hpp"
 #include <cassert>
 
 int main() {

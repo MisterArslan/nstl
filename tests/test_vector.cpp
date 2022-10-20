@@ -1,5 +1,5 @@
-#include "vector.h"
-#include "algorithm.h"
+#include "vector.hpp"
+#include "algorithm.hpp"
 #include <cassert>
 
 int main() {

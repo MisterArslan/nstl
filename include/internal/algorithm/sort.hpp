@@ -1,5 +1,5 @@
-#ifndef NSTL_INCLUDE_INTERNAL_SORT_H
-#define NSTL_INCLUDE_INTERNAL_SORT_H
+#ifndef NSTL_INCLUDE_INTERNAL_SORT_HPP
+#define NSTL_INCLUDE_INTERNAL_SORT_HPP
 
 namespace nstl {
 namespace internal {
@@ -16,7 +16,7 @@ void bubble_sort (Iter begin, Iter end, Func func = Func()) {
   }
 }
 
-}
-}
+} /* internal */
+} /* nstl */
 
-#endif //NSTL_INCLUDE_INTERNAL_SORT_H
+#endif /* NSTL_INCLUDE_INTERNAL_SORT_HPP */

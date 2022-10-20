@@ -1,7 +1,7 @@
-#ifndef NSTL_INCLUDE_INTERNAL_VECTOR_H
-#define NSTL_INCLUDE_INTERNAL_VECTOR_H
+#ifndef NSTL_INCLUDE_INTERNAL_VECTOR_HPP
+#define NSTL_INCLUDE_INTERNAL_VECTOR_HPP
 
-#include "allocator.h"
+#include "allocator.hpp"
 #include <iterator>
 
 namespace nstl {
@@ -112,7 +112,7 @@ public:
 #include "vector.inl"
 #include "vector_iter.inl"
 
-}
-}
+} /* internal */
+} /* nstl */
 
-#endif //NSTL_INCLUDE_INTERNAL_VECTOR_H
+#endif /* NSTL_INCLUDE_INTERNAL_VECTOR_HPP */
